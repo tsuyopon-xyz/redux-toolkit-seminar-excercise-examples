@@ -1,6 +1,6 @@
 export type TodoId = string;
 export type DateTime = string;
-export const TODO_STATUSES = [
+const TODO_STATUSES = [
   'waiting',
   'working',
   'pending',
