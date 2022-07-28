@@ -69,7 +69,7 @@ export const TodoList: FC<Props> = ({ todos }) => {
                           dispatch(restore(todo.id));
                         }}
                       >
-                        削除取り消し
+                        復元
                       </button>
                     ) : (
                       <button
