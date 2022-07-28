@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import { useAppSelector, useAppDispatch } from '../../../app/hooks';
-import { remove, selectTodos } from '../todosSlice';
+import { remove, update, selectTodos } from '../todosSlice';
 
 export const TodoList: FC = () => {
   const todos = useAppSelector(selectTodos);
@@ -43,7 +43,16 @@ export const TodoList: FC = () => {
                   <td>
                     <button
                       onClick={() => {
-                        //TODO: 更新機能の実装
+                        // ここでは決め打ちでtitleとbodyのみを更新しているが、
+                        // 最終的にはtitle, body, statusに好きな値を入力できるようにする
+                        const updateAction = update({
+                          id: todo.id,
+                          input: {
+                            title: '更新したtitle' + Date.now(),
+                            body: '更新したbody ' + Date.now(),
+                          },
+                        });
+                        dispatch(updateAction);
                       }}
                     >
                       更新
