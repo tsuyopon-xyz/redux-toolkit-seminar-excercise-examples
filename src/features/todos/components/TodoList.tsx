@@ -1,9 +1,13 @@
 import type { FC } from 'react';
-import { useAppSelector, useAppDispatch } from '../../../app/hooks';
-import { remove, update, selectTodos } from '../todosSlice';
+import { useAppDispatch } from '../../../app/hooks';
+import { remove, update, restore } from '../todosSlice';
+import { Todo } from '../types';
 
-export const TodoList: FC = () => {
-  const todos = useAppSelector(selectTodos);
+type Props = {
+  todos: Todo[];
+};
+
+export const TodoList: FC<Props> = ({ todos }) => {
   const dispatch = useAppDispatch();
 
   return (
@@ -59,13 +63,23 @@ export const TodoList: FC = () => {
                     </button>
                   </td>
                   <td>
-                    <button
-                      onClick={() => {
-                        dispatch(remove(todo.id));
-                      }}
-                    >
-                      削除
-                    </button>
+                    {isDeletedTodo(todo) ? (
+                      <button
+                        onClick={() => {
+                          dispatch(restore(todo.id));
+                        }}
+                      >
+                        削除取り消し
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => {
+                          dispatch(remove(todo.id));
+                        }}
+                      >
+                        削除
+                      </button>
+                    )}
                   </td>
                 </tr>
               );
@@ -75,6 +89,10 @@ export const TodoList: FC = () => {
       </table>
     </>
   );
+};
+
+const isDeletedTodo = (todo: Todo) => {
+  return todo.deletedAt !== undefined;
 };
 
 export default TodoList;
