@@ -5,6 +5,17 @@
 勉強会の詳細は、Notionに「[React × Redux Toolkit × TypeScriptでTodoアプリを作ろう（全4,5回を予定）](https://tsuyoshi.notion.site/React-Redux-Toolkit-TypeScript-Todo-4-5-5e1c3304c37b4e3a9a065751b629bfc1)」というタイトルでまとめております。
 
 
+## 勉強会用の学習サイトも用意しています
+
+このレポジトリは以下の学習サイトで使います。
+
+- [学習サイト](https://redux-toolkit-seminar-learning-materials.vercel.app/docs/intro/overview)
+
+
+オンライン勉強会で解説しながら使う予定ですが、勉強会に参加されない場合でも自学自習で進められるように作っているので、「React」「Redux Toolkit」「TypeScript」に興味がある方は、ぜひ学習の参考に使っていただけたら幸いです。
+
+
+
 ## 旧勉強会用レポジトリ
 
 このレポジトリは新しく2つ目として用意したレポジトリです。元々用意していたレポジトリは「 https://github.com/tsuyopon-xyz/redux-toolkit-seminar 」となります。
