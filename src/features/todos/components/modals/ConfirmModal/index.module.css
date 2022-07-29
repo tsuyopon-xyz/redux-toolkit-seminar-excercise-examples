@@ -1,0 +1,54 @@
+.message {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.buttonContainer {
+  display: flex;
+  /* justify-content: space-evenly; */
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 0;
+  border-radius: 4px;
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #f7f7f7;
+  outline: auto;
+  outline-width: 1px;
+  outline-color: #eaeaea;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: #e4e4e4;
+}
+
+.button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #c0c0c0;
+}
+
+.okButton {
+  background: #fd4b4b;
+  color: #fff;
+  font-weight: bold;
+  outline: auto;
+  outline-width: 1px;
+  outline-color: #ff3f3f;
+}
+
+.okButton:hover {
+  background: #e93939;
+}
+
+.okButton:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #d93535;
+}

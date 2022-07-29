@@ -1,22 +1,32 @@
-import type { FC } from 'react';
-import { useAppSelector } from '../../../app/hooks';
-import { selectTodos, selectDeletedTodos } from '../todosSlice';
+import { FC, useEffect } from 'react';
+import { useAppSelector, useAppDispatch } from '../../../app/hooks';
+import {
+  selectTodosByDisplayStatus,
+  selectIsFetching,
+  fetchTodosAsync,
+} from '../todosSlice';
 import { TodoForm } from './TodoForm';
 import { TodoList } from './TodoList';
+import { DisplayStatusSelector } from './DisplayStatusSelector';
 
 export const TodoContainer: FC = () => {
-  const todos = useAppSelector(selectTodos);
-  const deletedTodos = useAppSelector(selectDeletedTodos);
+  const todos = useAppSelector(selectTodosByDisplayStatus);
+  const isFetching = useAppSelector(selectIsFetching);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchTodosAsync());
+  }, []);
+
+  if (isFetching) return <div>読み込み中</div>;
 
   return (
     <div>
       <TodoForm />
       <hr />
+      <DisplayStatusSelector />
       <h2>Todo一覧</h2>
       <TodoList todos={todos} />
-      <hr />
-      <h2>削除されたTodo一覧</h2>
-      <TodoList todos={deletedTodos} />
     </div>
   );
 };
