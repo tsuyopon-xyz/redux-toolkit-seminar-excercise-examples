@@ -1,4 +1,10 @@
-import todosReducer, { create, remove, update, TodoState } from './todosSlice';
+import todosReducer, {
+  create,
+  remove,
+  update,
+  restore,
+  TodoState,
+} from './todosSlice';
 import { TodoInput, TodoId, TodoUpdatePayload } from './types';
 
 describe('todos reducer', () => {
@@ -97,5 +103,28 @@ describe('todos reducer', () => {
     expect(newState.todos[0].body).toEqual(payloadForUpdate.input.body);
     expect(newState.todos[0].status).toEqual(payloadForUpdate.input.status);
     expect(newState.todos[0].updatedAt !== undefined).toEqual(true);
+  });
+
+  it('should handle restore reducer', () => {
+    const targetId = 'test-id-1';
+    const initialState: TodoState = {
+      todos: [
+        {
+          id: targetId,
+          title: '',
+          body: '',
+          status: 'waiting',
+          createdAt: '2022-07-30 00:00:00',
+          deletedAt: '2022-07-30 00:00:00',
+        },
+      ],
+      displayStatus: 'all',
+      isFetching: false,
+      error: null,
+    };
+
+    const payloadForRestore: TodoId = targetId;
+    const newState = todosReducer(initialState, restore(payloadForRestore));
+    expect(newState.todos[0].deletedAt === undefined).toEqual(true);
   });
 });
