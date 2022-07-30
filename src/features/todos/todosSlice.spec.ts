@@ -3,7 +3,9 @@ import todosReducer, {
   remove,
   update,
   restore,
+  changeDisplayStatus,
   TodoState,
+  DisplayStatusType,
 } from './todosSlice';
 import { TodoInput, TodoId, TodoUpdatePayload } from './types';
 
@@ -126,5 +128,21 @@ describe('todos reducer', () => {
     const payloadForRestore: TodoId = targetId;
     const newState = todosReducer(initialState, restore(payloadForRestore));
     expect(newState.todos[0].deletedAt === undefined).toEqual(true);
+  });
+
+  it('should handle changeDisplayStatus reducer', () => {
+    const initialState: TodoState = {
+      todos: [],
+      displayStatus: 'all',
+      isFetching: false,
+      error: null,
+    };
+
+    const payloadForRestore: DisplayStatusType = 'updated';
+    const newState = todosReducer(
+      initialState,
+      changeDisplayStatus(payloadForRestore)
+    );
+    expect(newState.displayStatus).toEqual(payloadForRestore);
   });
 });
