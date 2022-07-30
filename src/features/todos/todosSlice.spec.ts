@@ -4,10 +4,11 @@ import todosReducer, {
   update,
   restore,
   changeDisplayStatus,
+  fetchTodosAsync,
   TodoState,
   DisplayStatusType,
 } from './todosSlice';
-import { TodoInput, TodoId, TodoUpdatePayload } from './types';
+import { Todo, TodoInput, TodoId, TodoUpdatePayload } from './types';
 
 describe('todos reducer', () => {
   it('should handle create reducer', () => {
@@ -144,5 +145,72 @@ describe('todos reducer', () => {
       changeDisplayStatus(payloadForRestore)
     );
     expect(newState.displayStatus).toEqual(payloadForRestore);
+  });
+});
+
+describe('todos extraReducer(async thunk)', () => {
+  it('makes displayStatus "true" when pending', async () => {
+    const initialState: TodoState = {
+      todos: [],
+      displayStatus: 'all',
+      isFetching: false,
+      error: null,
+    };
+
+    const action = {
+      type: fetchTodosAsync.pending.type,
+    };
+
+    const newState = todosReducer(initialState, action);
+    expect(newState).toEqual({
+      ...initialState,
+      isFetching: true,
+    });
+  });
+
+  it('makes displayStatus "false" and assign todos if exist when fulfilled', async () => {
+    const initialState: TodoState = {
+      todos: [],
+      displayStatus: 'all',
+      isFetching: false,
+      error: null,
+    };
+
+    const action = {
+      type: fetchTodosAsync.fulfilled.type,
+      payload: [
+        {
+          id: 'hello',
+        },
+      ] as Todo[],
+    };
+
+    const newState = todosReducer(initialState, action);
+    expect(newState).toEqual({
+      ...initialState,
+      isFetching: false,
+      todos: [...action.payload],
+    });
+  });
+
+  it('makes displayStatus "false" and assign error when rejected', async () => {
+    const initialState: TodoState = {
+      todos: [],
+      displayStatus: 'all',
+      isFetching: false,
+      error: null,
+    };
+
+    const action = {
+      type: fetchTodosAsync.rejected.type,
+      error: 'error',
+    };
+
+    const newState = todosReducer(initialState, action);
+    expect(newState).toEqual({
+      ...initialState,
+      isFetching: false,
+      error: action.error,
+    });
   });
 });
